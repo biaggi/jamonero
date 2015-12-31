@@ -1,7 +1,6 @@
 var program = require('commander');
 var fs = require("fs");
 var path = require("path");
-var optional = require("optional");
 var utils = require("./lib/utils.js")
 
 program
@@ -10,7 +9,7 @@ program
   .option("create [type]", "Create a namespace to store tasks")
 
 
-//considerate this
+// take this into consideration to introduce parameters dinamically 
 program.option.apply(program, ["test", "desc"]);
 
 program.parse(process.argv);
@@ -19,17 +18,12 @@ program.parse(process.argv);
    * Run a task in a given namespace
    */
   if (program.run) {
+
   	var command = program.run;
-  	console.log(command)
+  	var taskInfo = utils.composeTask(utils.getTaskFromNS(command));
 
-  	var taskConfiguration = utils.getConfFile(command);
-  	var task = utils.getRunner(command);
+  	utils.runTask(taskInfo);
 
-	console.log('task', task, taskConfiguration);
-
-  	task.run.apply(task, taskConfiguration);
-
-//  	task.run();
   }
 
   if (program.create) {
