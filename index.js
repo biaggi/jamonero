@@ -20,8 +20,10 @@ program.parse(process.argv);
   if (program.run) {
 
   	var command = program.run;
+  	console.log('task from ns', utils.getTaskFromNS(command))
   	var taskInfo = utils.composeTask(utils.getTaskFromNS(command));
-
+	
+	console.log('running first task', taskInfo)
   	utils.runTask(taskInfo);
 
   }
